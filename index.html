@@ -3,36 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <title>Cadastro de Pacientes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    h2 {
+      text-align: center;
+      background-color: #4CAF50;
+      color: white;
+      margin: 0;
+      padding: 1rem;
+    }
+    form {
+      background: white;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 700px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .form-group {
+      flex: 1 1 45%; /* cada campo ocupa cerca de 45% */
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="date"] {
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .full-width {
+      flex: 1 1 100%; /* para campos que precisam ocupar linha inteira */
+    }
+    button {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 1rem;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #loading {
+      display: none;
+      text-align: center;
+      margin-top: 1rem;
+      color: #555;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h2>Cadastro de Pacientes - Fisioterapia</h2>
-  <form id="formPaciente">
-    <label>Data:</label><br><input type="date" name="DATA"><br>
-    <label>Prontuário:</label><br><input type="text" name="PRONTUARIO"><br>
-    <label>CNS:</label><br><input type="text" name="CNS"><br>
-    <label>Nome:</label><br><input type="text" name="NOME"><br>
-    <label>Data de Nascimento:</label><br><input type="date" name="DATA_NAS"><br>
-    <label>Sexo:</label><br><input type="text" name="SEXO"><br>
-    <label>Logradouro:</label><br><input type="text" name="LOGRADOURO"><br>
-    <label>Número:</label><br><input type="text" name="NUMERO"><br>
-    <label>CEP:</label><br><input type="text" name="CEP"><br>
-    <label>Município:</label><br><input type="text" name="MUNICIPIO"><br>
-    <label>Procedimento:</label><br><input type="text" name="PROCEDIMENTO"><br><br>
-    
+
+<h2>Cadastro de Pacientes - Fisioterapia</h2>
+
+<form id="formPaciente">
+  <div class="form-group">
+    <label>Data:</label>
+    <input type="date" name="DATA">
+  </div>
+
+  <div class="form-group">
+    <label>Prontuário:</label>
+    <input type="text" name="PRONTUARIO">
+  </div>
+
+  <div class="form-group">
+    <label>CNS:</label>
+    <input type="text" name="CNS">
+  </div>
+
+  <div class="form-group">
+    <label>Nome:</label>
+    <input type="text" name="NOME">
+  </div>
+
+  <div class="form-group">
+    <label>Data de Nascimento:</label>
+    <input type="date" name="DATA_NAS">
+  </div>
+
+  <div class="form-group">
+    <label>Sexo:</label>
+    <input type="text" name="SEXO">
+  </div>
+
+  <div class="form-group">
+    <label>Logradouro:</label>
+    <input type="text" name="LOGRADOURO">
+  </div>
+
+  <div class="form-group">
+    <label>Número:</label>
+    <input type="text" name="NUMERO">
+  </div>
+
+  <div class="form-group">
+    <label>CEP:</label>
+    <input type="text" name="CEP">
+  </div>
+
+  <div class="form-group">
+    <label>Município:</label>
+    <input type="text" name="MUNICIPIO">
+  </div>
+
+  <div class="form-group full-width">
+    <label>Procedimento:</label>
+    <input type="text" name="PROCEDIMENTO">
+  </div>
+
+  <div class="form-group full-width">
     <button type="submit">Enviar</button>
-  </form>
+  </div>
 
-  <script>
-    const scriptURL = "https://api.sheetmonkey.io/form/r7qqJhQ3VjvJwyUXHHLELr";
+  <div id="loading">Enviando dados, por favor aguarde...</div>
+</form>
 
-    document.getElementById("formPaciente").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      
-      fetch(scriptURL, { method: "POST", body: formData })
-        .then(response => alert("Dados enviados com sucesso!"))
-        .catch(error => alert("Erro ao enviar: " + error.message));
-    });
-  </script>
+<script>
+  const scriptURL = "https://api.sheetmonkey.io/form/r7qqJhQ3VjvJwyUXHHLELr";
+  const form = document.getElementById("formPaciente");
+  const loading = document.getElementById("loading");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    loading.style.display = "block"; // Mostrar mensagem de carregando
+
+    fetch(scriptURL, { method: "POST", body: formData })
+      .then(response => {
+        alert("Dados enviados com sucesso!");
+        form.reset(); // Limpar o formulário
+        loading.style.display = "none"; // Esconder carregando
+      })
+      .catch(error => {
+        alert("Erro ao enviar: " + error.message);
+        loading.style.display = "none"; // Esconder carregando mesmo se erro
+      });
+  });
+</script>
+
 </body>
 </html>
