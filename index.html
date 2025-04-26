@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Pacientes</title>
+</head>
+<body>
+  <h2>Cadastro de Pacientes - Fisioterapia</h2>
+  <form id="formPaciente">
+    <label>Data:</label><br><input type="date" name="DATA"><br>
+    <label>Prontuário:</label><br><input type="text" name="PRONTUARIO"><br>
+    <label>CNS:</label><br><input type="text" name="CNS"><br>
+    <label>Nome:</label><br><input type="text" name="NOME"><br>
+    <label>Data de Nascimento:</label><br><input type="date" name="DATA_NAS"><br>
+    <label>Sexo:</label><br><input type="text" name="SEXO"><br>
+    <label>Logradouro:</label><br><input type="text" name="LOGRADOURO"><br>
+    <label>Número:</label><br><input type="text" name="NUMERO"><br>
+    <label>CEP:</label><br><input type="text" name="CEP"><br>
+    <label>Município:</label><br><input type="text" name="MUNICIPIO"><br>
+    <label>Procedimento:</label><br><input type="text" name="PROCEDIMENTO"><br><br>
+    
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyhzarBr64xpQmSCZfgiAdAU2BFMnU6BzU6ba-kdNdbPePkQq-7QFLmgWgDm9fkdW-k/exec_O_URL_DO_WEB_APP";
+
+    document.getElementById("formPaciente").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      
+      fetch(scriptURL, { method: "POST", body: formData })
+        .then(response => alert("Dados enviados com sucesso!"))
+        .catch(error => alert("Erro ao enviar: " + error.message));
+    });
+  </script>
+</body>
+</html>
